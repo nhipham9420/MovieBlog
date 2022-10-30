@@ -1,0 +1,61 @@
+<h3>Users</h3>
+
+<app-generic-list [list]="users">
+  <ng-container content>
+    <table mat-table [dataSource]="users" class="mat-elevation-z8 table-index">
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+      </ng-container>
+      <ng-container matColumnDef="claimType">
+        <th mat-header-cell *matHeaderCellDef>Claim Type</th>
+        <td mat-cell *matCellDef="let element">{{ element.claimType }}</td>
+      </ng-container>
+      <ng-container matColumnDef="claimValue">
+        <th mat-header-cell *matHeaderCellDef>Claim Value</th>
+        <td mat-cell *matCellDef="let element">{{ element.claimValue }}</td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let element">
+          <button
+            mat-flat-button
+            class="btn btn-warning"
+            [swal]="{
+              title: 'Confirmation',
+              text: 'Are you sure that you want to make the user an admin?',
+              showCancelButton: true
+            }"
+            (confirm)="makeAdmin(element.id)"
+          >
+            Make Admin
+          </button>
+
+          <button
+            mat-flat-button
+            class="btn btn-danger"
+            [swal]="{
+              title: 'Confirmation',
+              text: 'Are you sure that you want to remove the user as an admin?',
+              showCancelButton: true
+            }"
+            (confirm)="removeAdmin(element.id)"
+          >
+            Remove Admin
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+      <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
+    </table>
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 20, 50]"
+      showFirstLastButtons
+      [length]="totalAmountOfRecords"
+      [pageSize]="pageSize"
+      (page)="updatePagination($event)"
+      class="mat-elevation-z8"
+    ></mat-paginator>
+  </ng-container>
+</app-generic-list>

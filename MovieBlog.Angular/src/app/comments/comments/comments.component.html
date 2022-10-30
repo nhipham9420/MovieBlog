@@ -1,0 +1,24 @@
+<div class="comments pt-4 row">
+  <div class="col-8">
+    <div class="comment-form-title"><strong>Comments</strong></div>
+    <app-form-comment
+      submitLabel="Write"
+      (handleSubmit)="addComment({ text: $event, parentId: 0, movieId: 0 })"
+    >
+    </app-form-comment>
+    <div class="comments-container">
+      <app-comment
+        *ngFor="let rootComment of getRootComments()"
+        [comment]="rootComment"
+        [replies]="getReplies(rootComment.id)"
+        [activeComment]="activeComment"
+        (setActiveComment)="setActiveComment($event)"
+        (addComment)="addComment($event)"
+        (deleteComment)="deleteComment($event)"
+        (updateComment)="updateComment($event)"
+        [currentUserId]="currentUserId"
+      >
+      </app-comment>
+    </div>
+  </div>
+</div>

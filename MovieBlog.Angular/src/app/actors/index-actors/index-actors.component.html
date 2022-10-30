@@ -1,0 +1,65 @@
+<h2>Actors</h2>
+
+<button mat-flat-button routerLink="/actors/create" class="btn btn-dark">
+  Create new
+</button>
+
+<app-generic-list [list]="actors">
+  <ng-container content>
+    <table mat-table [dataSource]="actors" class="mat-elevation-z8 table-index">
+      <ng-container matColumnDef="picture">
+        <th mat-header-cell *matHeaderCellDef>Picture</th>
+        <td mat-cell *matCellDef="let element">
+          <img src="{{ element.picture }}" height="150px" class="my-2" />
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      </ng-container>
+      <ng-container matColumnDef="dateOfBirth">
+        <th mat-header-cell *matHeaderCellDef>Date of birth</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.dateOfBirth | date: "dd/MM/yyyy" }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let element">
+          <a
+            routerLink="/actors/edit/{{ element.id }}"
+            mat-flat-button
+            class="btn btn-warning"
+          >
+            Edit
+          </a>
+          <button
+            mat-flat-button
+            class="btn btn-danger"
+            [swal]="{
+              title: 'Confirmation',
+              text: 'Are you sure that you want to delete the record?',
+              showCancelButton: true
+            }"
+            (confirm)="delete(element.id)"
+          >
+            Delete
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+      <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
+    </table>
+
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 20, 50]"
+      showFirstLastButtons
+      [length]="totalAmountOfRecords"
+      [pageSize]="pageSize"
+      (page)="updatePagination($event)"
+      class="mat-elevation-z8"
+    >
+    </mat-paginator>
+  </ng-container>
+</app-generic-list>

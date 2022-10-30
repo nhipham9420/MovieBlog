@@ -1,0 +1,20 @@
+<div *ngIf="!list" class="d-flex align-items-center justify-content-center">
+  <span #loading>
+    <ng-content select="[loading]"></ng-content>
+  </span>
+  <div class="loader" *ngIf="!loading.innerHTML.trim()">
+    <span></span>
+    <p>Loading</p>
+  </div>
+</div>
+
+<div *ngIf="list?.length === 0">
+  <span #empty>
+    <ng-content select="[empty]"></ng-content>
+  </span>
+  <span *ngIf="!empty.innerHTML.trim()"> There are no records to display </span>
+</div>
+
+<ng-container *ngIf="list && list.length > 0">
+  <ng-content select="[content]"></ng-content>
+</ng-container>

@@ -1,0 +1,69 @@
+<mat-toolbar class="p-3 bg-dark text-white">
+  <div class="container">
+    <div
+      class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start"
+    >
+      <div class="nav col-12 col-lg-auto me-lg-auto justify-content-center">
+        <a mat-button routerLink="" class="btn btn-outline-light me-2">
+          Home
+        </a>
+        <!-- <a
+          mat-button
+          routerLink="movies/filter"
+          class="btn btn-outline-light me-2"
+        >
+          <mat-icon>search</mat-icon>Search movies
+        </a> -->
+        <app-authorize-view [role]="'admin'">
+          <ng-container authorized>
+            <!-- <a
+              mat-button
+              routerLink="genres"
+              class="btn btn-outline-light me-2"
+            >
+              Genres
+            </a> -->
+            <a
+              mat-button
+              routerLink="movies/create"
+              class="btn btn-outline-light me-2"
+            >
+              Create Movie
+            </a>
+            <a
+              mat-button
+              routerLink="actors"
+              class="btn btn-outline-light me-2"
+            >
+              Actors
+            </a>
+            <a mat-button routerLink="users" class="btn btn-outline-light me-2">
+              Users
+            </a>
+          </ng-container>
+        </app-authorize-view>
+      </div>
+      <app-authorize-view>
+        <ng-container authorized>
+          <a mat-button class="btn btn-outline-light me-2"
+            >Hello, {{ securityService.getFieldFromJWT("email") }}</a
+          >
+          <a
+            mat-button
+            (click)="securityService.logout()"
+            class="btn btn-warning"
+            >Logout</a
+          >
+        </ng-container>
+        <ng-container notAuthorized>
+          <a mat-button routerLink="login" class="btn btn-outline-light me-2"
+            >Login</a
+          >
+          <a mat-button routerLink="register" class="btn btn-warning"
+            >Register</a
+          >
+        </ng-container>
+      </app-authorize-view>
+    </div>
+  </div>
+</mat-toolbar>

@@ -1,0 +1,57 @@
+<div class="row gx-lg-5">
+  <app-generic-list [list]="movies">
+    <ng-container content>
+      <div class="movies-container">
+        <div
+          *ngFor="let movie of movies; let index = index"
+          class="col-lg-6 col-xxl-3 mb-5"
+        >
+          <div class="card border-0 h-100">
+            <div class="card-body text-center">
+              <a [routerLink]="'/movie/' + movie.id">
+                <img [src]="movie.poster" alt="Poster" />
+              </a>
+              <h3 class="pt-4">
+                <a [routerLink]="'/movie/' + movie.id"
+                  ><strong
+                    >{{ movie.title }} -
+                    {{ movie.releaseDate | date: "yyyy" }}</strong
+                  ></a
+                >
+              </h3>
+              <div>
+                <app-authorize-view
+                  [role]="'admin'"
+                  class="row justify-content-center"
+                >
+                  <ng-container authorized>
+                    <a
+                      [routerLink]="'/movies/edit/' + movie.id"
+                      mat-flat-button
+                      class="btn btn-dark text-white col-4"
+                    >
+                      Edit
+                    </a>
+                    <button
+                      mat-flat-button
+                      class="btn btn-danger col-4"
+                      type="button"
+                      [swal]="{
+                        title: 'Confirmation',
+                        text: 'Are you sure you want to delete this?',
+                        showCancelButton: true
+                      }"
+                      (confirm)="remove(movie.id)"
+                    >
+                      Delete
+                    </button>
+                  </ng-container>
+                </app-authorize-view>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </app-generic-list>
+</div>
