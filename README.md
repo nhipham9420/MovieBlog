@@ -5,7 +5,7 @@
 - Entity Framework Core - Code First Approach
 - SQL Server
 
-**Client**
+**Frontend**
 - Angular (Angular Material)
 
 
